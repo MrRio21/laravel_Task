@@ -2,108 +2,75 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function index(){
         $posts = [
             [
-                'id' => 1,
-                'title' => 'php',
-                'description' => 'web language',
-                'posted_by' => 'rio',
-                'created_at' => '2202-12-12',
-            ],
+                "id"=>"1",
+                "title"=>"php",
+                "Posted_by"=>"mohamed",
+                "description"=>"programming language",
+                "created_at"=>"2023 01 30",
+
+            ]
+            ,
             [
-                'id' => 2,
-                'title' => 'laravel',
-                'description' => 'framework',
-                'posted_by' => 'Mohamed',
-                'created_at' => '2202-12-12',
-            ],
+                "id"=>"2",
+                "title"=>"laravel",
+                "Posted_by"=>"rio",
+                "description"=>"laravel Is PHP Framework",
+                "created_at"=>"2022 01 31",
+            ]
         ];
         return view('posts.index', [
             'posts' => $posts,
         ]);
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
+    public function show($id){
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
         $post = [
-            'id' => 2,
-            'title' => 'laravel',
-            'description' => 'framework',
-            'posted_by' => 'Mohamed',
-            'created_at' => '2202-12-12',
+            "id" => "3",
+            "title" => "Codeginator",
+            "Posted_by" => "Kariem",
+            "description" => "Codeginator Is PHP Framework",
+            "created_at" => "2023 02 12",
+            "email"=>"kariem12@gmail.com"
         ];
-        return view('posts.show', ['post' => $post]);
+
+        return view('posts.show', [
+            'post' => $post,
+        ]);
+
+    }
+    public function create (){
+        return View("posts.create");
+    }
+    public function store(Request $request){
+        if($request->title && $request->description && $request->postedBy){
+            return "The Data Is Stored Successfully";
+        }else {
+            return View("posts.create");
+        }
+    }
+    public function edit($id){
+        $post = [
+            "id" => "3",
+            "title" => "Codeginator",
+            "Posted_by" => "Kariem",
+            "description" => "Codeginator Is PHP Framework",
+            "created_at" => "2023 02 12"
+        ];
+        return View("posts.edit" , ['post' => $post,]);
+    }
+    public function update(Request $request){
+        return "The Data Is Updated Successfully";
+    }
+    public function destroy(){
+        return "The Data Is Deleted Successfully";
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, post $post)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(post $post)
-    {
-        //
-    }
 }

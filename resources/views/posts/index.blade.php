@@ -1,48 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Index</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></head>
+@extends('layouts.app')
+@section('content')
+<a type="button" class="btn btn-primary m-5" href="{{route('posts.create')}}">Create Post</a>
 
-<body>
-<div class="container">
-    <div class="text-center">
-        <button type="button" class="mt-4 btn btn-success">Create Post</button>
-    </div>
-    <table class="table mt-4">
-        <thead>
+<table class="table container">
+    <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Title</th>
-            <th scope="col">Posted By</th>
-            <th scope="col">Created At</th>
+            <th scope="col">Posted_by</th>
+            <th scope="col">Created_at</th>
             <th scope="col">Actions</th>
         </tr>
-        </thead>
-        <tbody>
+    </thead>
+    <tbody>
         @foreach($posts as $post)
         <tr>
-            <td>{{$post['id']}}</td>
+            <th scope="row">{{$post['id']}}</th>
             <td>{{$post['title']}}</td>
-            <td>{{$post['posted_by']}}</td>
+            <td>{{$post['Posted_by']}}</td>
             <td>{{$post['created_at']}}</td>
             <td>
-                <a href="/posts/{{$post['id']}}" class="btn btn-info">View</a>
-                <a href="#" class="btn btn-primary">Edit</a>
-                <a href="#" class="btn btn-danger">Delete</a>
+                <a type="button" class="btn btn-secondary" href="{{route('posts.edit', $post['id'])}}">Edit</a>
+                <a type="button" class="btn btn-success" href="{{route('posts.show', $post['id'] )}}">Show</a>
+                <input type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal{{$post['id']}}" class="btn btn-danger" value="Delete">
             </td>
         </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal{{$post['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel{{$post['id']}}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel{{$post['id']}}">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you wanna delete it ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <form method="post" action="{{route('posts.delete',$post['id'])}}">
+                            @method('delete')
+                            @csrf
+                            <button class="btn btn-danger" type="submit">Yes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
         @endforeach
-        </tbody>
-    </table>
+    </tbody>
+</table>
+@endsection@extends('layouts.app')
+@section('content')
+<a type="button" class="btn btn-primary m-5" href="{{route('posts.create')}}">Create Post</a>
 
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-</body>
-</html>
-
+<table class="table container">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Posted_by</th>
+            <th scope="col">Created_at</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($posts as $post)
+        <tr>
+            <th scope="row">{{$post['id']}}</th>
+            <td>{{$post['title']}}</td>
+            <td>{{$post['Posted_by']}}</td>
+            <td>{{$post['created_at']}}</td>
+            <td>
+                <a type="button" class="btn btn-secondary" href="{{route('posts.edit', $post['id'])}}">Edit</a>
+                <a type="button" class="btn btn-success" href="{{route('posts.show', $post['id'] )}}">Show</a>
+                <input type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal{{$post['id']}}" class="btn btn-danger" value="Delete">
+            </td>
+        </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal{{$post['id']}}" tabindex="-1" aria-labelledby="exampleModalLabel{{$post['id']}}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel{{$post['id']}}">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you wanna delete it ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <form method="post" action="{{route('posts.delete',$post['id'])}}">
+                            @method('delete')
+                            @csrf
+                            <button class="btn btn-danger" type="submit">Yes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+        @endforeach
+    </tbody>
+</table>
+@endsection
